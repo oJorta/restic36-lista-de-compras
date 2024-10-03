@@ -1,0 +1,39 @@
+<div>
+    <button
+        class="toggleItemBought"
+        (click)="toggleBought()"
+    >
+        @if (!isBought) {
+            <img src="../../assets/icons/circle.svg" alt="">
+        } @else {
+            <img src="../../assets/icons/circle-check.svg" alt="">
+        }
+    </button>
+
+    <input
+        type="text"
+        name=""
+        id=""
+        value="{{ itemName }}"
+        (input)="updateName($event)"
+        class="itemNameInput"
+        [ngStyle]="{ 'text-decoration': isBought ? 'line-through' : 'none' }"
+    >
+</div>
+
+<div>
+    <p
+        class="itemStatus"
+        [ngStyle]="{ 'background-color': isBought ? '#50A773' : '#9C050B' }"
+    >
+        @if (isBought) {
+            Comprado
+        } @else {
+            Não comprado
+        }
+    </p>
+
+    <button class="deleteItemBtn">
+        <img src="../../assets/icons/trash.svg" alt="">
+    </button>
+</div>
