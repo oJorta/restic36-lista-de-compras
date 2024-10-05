@@ -21,6 +21,10 @@ export class AppComponent {
     this.sortItems();
   }
 
+  handleUpdateName(id: number, itemName: string) {
+    this.items[id].itemName = itemName;
+  }
+
   handleToggleBought(id: number, isBought: boolean) {
     this.items[id].isBought = isBought;
     this.sortItems();

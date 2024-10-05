@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,12 +11,17 @@ import { CommonModule } from '@angular/common';
 export class ShoppingListItemComponent {
   @Input({required: true}) itemName!: string;
   @Input({required: true}) isBought!: boolean;
+  @Output() updateName = new EventEmitter<string>();
   @Output() toggleBought = new EventEmitter<boolean>();
   @Output() deleteItem = new EventEmitter<void>();
 
-  updateName (event: Event) {
+  handleUpdateName (event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    this.itemName = inputElement.value;
+    if (inputElement.value) {
+      this.updateName.emit(inputElement.value);
+    } else {
+      inputElement.value = this.itemName;
+    }
   }
 
   handleToggleBought () {
