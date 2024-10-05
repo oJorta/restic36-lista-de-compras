@@ -10,10 +10,15 @@
   </header>
 
   <main>
-    <app-add-new-item></app-add-new-item>
+    <app-add-new-item (newItem)="addNewItem($event)"></app-add-new-item>
 
     <div class="shopping-list-container">
-      <app-shopping-list-item></app-shopping-list-item>
+      @for (item of items; track item.itemName) {
+        <app-shopping-list-item
+          [itemName]="item.itemName"
+          [isBought]="item.isBought"
+        ></app-shopping-list-item>
+      }
     </div>
   </main>
     

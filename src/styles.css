@@ -13,6 +13,16 @@
 
 body {
     width: 100vw;
+    height: 100vh;
     background-color: var(--primary-color);
     color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--tertiary-color);
+    border-radius: 10px;
 }

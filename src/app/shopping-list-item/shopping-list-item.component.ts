@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,8 +9,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './shopping-list-item.component.css'
 })
 export class ShoppingListItemComponent {
-  itemName = '';
-  isBought = false;
+  @Input({required: true}) itemName!: string;
+  @Input({required: true}) isBought!: boolean;
 
   updateName (event: Event) {
     const inputElement = event.target as HTMLInputElement;

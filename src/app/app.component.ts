@@ -11,5 +11,13 @@ import { ShoppingListItemComponent } from "./shopping-list-item/shopping-list-it
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'lista-de-compras';
+  items = Array<{ itemName: string, isBought: boolean }>();
+
+  addNewItem(itemName: string) {
+    this.items.push({
+      itemName,
+      isBought: false,
+    });
+    this.items.sort((a, b) => a.isBought === b.isBought ? 0 : a.isBought ? 1 : -1);
+  }
 }
