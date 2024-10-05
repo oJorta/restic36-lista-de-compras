@@ -20,4 +20,9 @@ export class AppComponent {
     });
     this.items.sort((a, b) => a.isBought === b.isBought ? 0 : a.isBought ? 1 : -1);
   }
+
+  toggleBought(id: number, isBought: boolean) {
+    this.items[id].isBought = isBought;
+    this.items.sort((a, b) => a.isBought === b.isBought ? 0 : a.isBought ? 1 : -1);
+  }
 }
