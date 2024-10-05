@@ -1,13 +1,5 @@
 <div class="container">
-  <header>
-    <div>
-      <img src="../assets/icons/shopping-basket.svg" alt="">
-      <h1>Lista de compras</h1>
-    </div>
-    <p>
-      Organize suas compras com facilidade.
-    </p>
-  </header>
+  <app-header></app-header>
 
   <main>
     <app-add-new-item (newItem)="addNewItem($event)"></app-add-new-item>

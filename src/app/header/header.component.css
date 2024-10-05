@@ -1,0 +1,27 @@
+header {
+    margin: 0 auto;
+    width: max-content;
+    padding-top: 40px;
+    text-align: center;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+header div img {
+    width: 40px;
+    height: auto;
+}
+
+header div h1 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+header p {
+    padding-top: 8px;
+    font-size: 18px;
+}
