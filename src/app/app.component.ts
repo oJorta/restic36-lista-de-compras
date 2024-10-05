@@ -13,7 +13,7 @@ import { HeaderComponent } from "./header/header.component";
 })
 export class AppComponent {
   items = Array<{ itemName: string, isBought: boolean }>();
-
+  
   addNewItem(itemName: string) {
     this.items.push({
       itemName,

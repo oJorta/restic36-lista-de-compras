@@ -49,3 +49,22 @@ form button:hover {
     opacity: 0.8;
 }
 
+@media screen and (max-width: 500px) {
+    form {
+        padding: 12px 18px;
+    }
+
+    form input {
+        font-size: 16px;
+    }
+
+    form button {
+        font-size: 14px;
+        padding: 6px 14px;
+    }
+
+    form hr {
+        margin: 0 10px;
+    }
+    
+}

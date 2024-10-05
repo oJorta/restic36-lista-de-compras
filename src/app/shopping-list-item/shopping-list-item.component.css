@@ -47,6 +47,8 @@
 }
 
 button {
+    display: flex;
+    align-items: center;
     background: none;
     border: none;
     outline: none;
@@ -64,5 +66,20 @@ button:hover {
     }
     100% {
         opacity: 1;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    :host div {
+        gap: .5rem;
+    }
+
+    .itemNameInput {
+        font-size: 16px;
+    }
+
+    .itemStatus {
+        font-size: 12px;
+        font-weight: 500;
     }
 }

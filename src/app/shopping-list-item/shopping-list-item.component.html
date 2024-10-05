@@ -15,7 +15,10 @@
         value="{{ itemName }}"
         (blur)="handleUpdateName($event)"
         class="itemNameInput"
-        [ngStyle]="{ 'text-decoration': isBought ? 'line-through' : 'none' }"
+        [ngStyle]="{
+            'text-decoration': isBought ? 'line-through' : 'none',
+            'opacity': isBought ? '0.5' : '1'
+        }"
     >
 </div>
 

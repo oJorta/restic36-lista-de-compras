@@ -7,6 +7,7 @@ header {
 
 header div {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
 }
@@ -24,4 +25,19 @@ header div h1 {
 header p {
     padding-top: 8px;
     font-size: 18px;
+}
+
+@media screen and (max-width: 500px) {
+    header div img {
+        width: 32px;
+        height: auto;
+    }
+
+    header div h1 {
+        font-size: 24px;
+    }
+
+    header p {
+        font-size: 16px;
+    }
 }
