@@ -12,6 +12,7 @@ export class ShoppingListItemComponent {
   @Input({required: true}) itemName!: string;
   @Input({required: true}) isBought!: boolean;
   @Output() toggleBought = new EventEmitter<boolean>();
+  @Output() deleteItem = new EventEmitter<void>();
 
   updateName (event: Event) {
     const inputElement = event.target as HTMLInputElement;
@@ -20,5 +21,9 @@ export class ShoppingListItemComponent {
 
   handleToggleBought () {
     this.toggleBought.emit(!this.isBought);
+  }
+
+  handleDelete () {
+    this.deleteItem.emit();
   }
 }

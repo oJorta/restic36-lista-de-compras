@@ -18,11 +18,20 @@ export class AppComponent {
       itemName,
       isBought: false,
     });
-    this.items.sort((a, b) => a.isBought === b.isBought ? 0 : a.isBought ? 1 : -1);
+    this.sortItems();
   }
 
-  toggleBought(id: number, isBought: boolean) {
+  handleToggleBought(id: number, isBought: boolean) {
     this.items[id].isBought = isBought;
+    this.sortItems();
+  }
+  
+  handleDeleteItem(id: number) {
+    this.items.splice(id, 1);
+    this.sortItems();
+  }
+
+  sortItems() {
     this.items.sort((a, b) => a.isBought === b.isBought ? 0 : a.isBought ? 1 : -1);
   }
 }

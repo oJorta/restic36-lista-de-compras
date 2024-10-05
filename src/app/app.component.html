@@ -17,7 +17,8 @@
         <app-shopping-list-item
           [itemName]="item.itemName"
           [isBought]="item.isBought"
-          (toggleBought)="toggleBought(id, $event)"
+          (toggleBought)="handleToggleBought(id, $event)"
+          (deleteItem)="handleDeleteItem(id)"
         ></app-shopping-list-item>
       }
     </div>
