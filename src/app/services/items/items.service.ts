@@ -6,7 +6,7 @@ import { ShoppingListItem } from '../../types/shopping-list-item.model';
   providedIn: 'root'
 })
 export class ItemsService {
-  private apiUrl = 'http://localhost:3000/items';
+  private apiUrl = 'https://lista-de-compras-json-server.vercel.app/items';
 
   constructor(private httpClient: HttpClient) { }
 
