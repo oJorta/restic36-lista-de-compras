@@ -4,6 +4,7 @@ import { AddNewItemComponent } from "../../components/add-new-item/add-new-item.
 import { ShoppingListItemComponent } from "../../components/shopping-list-item/shopping-list-item.component";
 import { HeaderComponent } from "../../components/header/header.component";
 import { ShoppingListItem } from '../../types/shopping-list-item.model';
+import { ItemsService } from '../../services/items/items.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -13,47 +14,74 @@ import { ShoppingListItem } from '../../types/shopping-list-item.model';
   styleUrl: './shopping-list.component.css'
 })
 export class ShoppingListComponent implements OnInit {
-  items = Array<ShoppingListItem>();
+  items!: Array<ShoppingListItem>;
+
+  constructor(private itemService: ItemsService) {}
 
   ngOnInit() {
-    const items = localStorage.getItem('items');
-
-    if (items) {
-      this.items = JSON.parse(items);
-    }
+    this.itemService.getItems().subscribe(items => {
+      this.items = items;
+      this.sortItems();
+    })
   }
   
   addNewItem(itemName: string) {
-    this.items.push({
+    const newItem = {
       itemName,
       isBought: false,
-    });
-    this.sortItems();
-    this.saveItems();
+      userId: 1
+    }
+
+    this.itemService.createItem(newItem).subscribe({
+      next: (item) => {
+        this.items.push(item)
+        this.sortItems();
+      },
+      error: (err) => console.error('Erro: ', err)
+    })
   }
   
-  handleUpdateName(id: number, itemName: string) {
-    this.items[id].itemName = itemName;
-    this.saveItems();
+  handleUpdateName(id: number, newItemName: string) {
+    const targetItem = this.items.find(item => item.id === id);
+    
+    if (targetItem) {
+      targetItem.itemName = newItemName;
+      this.itemService.updateItem(targetItem).subscribe({
+        next: (updatedItem) => {
+          this.items = this.items.map(item => item.id === id ? updatedItem : item);
+        },
+        error: (err) => console.error('Erro: ', err)
+      })
+    }
+
   }
   
   handleToggleBought(id: number, isBought: boolean) {
-    this.items[id].isBought = isBought;
-    this.sortItems();
-    this.saveItems();
+    const targetItem = this.items.find(item => item.id === id);
+    
+    if (targetItem) {
+      targetItem.isBought = isBought;
+      this.itemService.updateItem(targetItem).subscribe({
+        next: (updatedItem) => {
+          this.items = this.items.map(item => item.id === id ? updatedItem : item);
+          this.sortItems();
+        },
+        error: (err) => console.error('Erro: ', err)
+      })
+    }
   }
   
   handleDeleteItem(id: number) {
-    this.items.splice(id, 1);
-    this.sortItems();
-    this.saveItems();
+    this.itemService.deleteItem(id).subscribe({
+      next: () => {
+        this.items = this.items.filter(item => item.id !== id);
+        this.sortItems();
+      },
+      error: (err) => console.error('Erro: ', err)
+    })
   }
   
   sortItems() {
     this.items.sort((a, b) => a.isBought === b.isBought ? 0 : a.isBought ? 1 : -1);
-  }
-
-  saveItems() {
-    localStorage.setItem('items', JSON.stringify(this.items));
   }
 }

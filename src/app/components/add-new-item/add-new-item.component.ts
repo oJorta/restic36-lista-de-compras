@@ -16,7 +16,6 @@ export class AddNewItemComponent {
     event.preventDefault()
     
     if (this.nameControl.valid) {
-      console.log(this.nameControl.valid)
       this.newItem.emit(this.nameControl.value as string);
       this.nameControl.reset()
     }
