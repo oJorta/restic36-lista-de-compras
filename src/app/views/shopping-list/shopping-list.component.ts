@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AddNewItemComponent } from "../../add-new-item/add-new-item.component";
-import { ShoppingListItemComponent } from "../../shopping-list-item/shopping-list-item.component";
-import { HeaderComponent } from "../../header/header.component";
+import { AddNewItemComponent } from "../../components/add-new-item/add-new-item.component";
+import { ShoppingListItemComponent } from "../../components/shopping-list-item/shopping-list-item.component";
+import { HeaderComponent } from "../../components/header/header.component";
 import { ShoppingListItem } from '../../types/shopping-list-item.model';
 
 @Component({
