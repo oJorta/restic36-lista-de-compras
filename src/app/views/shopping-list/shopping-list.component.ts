@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, ActivatedRoute } from '@angular/router';
 import { AddNewItemComponent } from "../../components/add-new-item/add-new-item.component";
 import { ShoppingListItemComponent } from "../../components/shopping-list-item/shopping-list-item.component";
 import { HeaderComponent } from "../../components/header/header.component";
 import { ShoppingListItem } from '../../types/shopping-list-item.model';
 import { ItemsService } from '../../services/items/items.service';
+import { AuthService, User } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-shopping-list',
@@ -15,12 +16,25 @@ import { ItemsService } from '../../services/items/items.service';
 })
 export class ShoppingListComponent implements OnInit {
   items!: Array<ShoppingListItem>;
+  userId!: number;
+  profile!: User | undefined | null;
 
-  constructor(private itemService: ItemsService) {}
+  constructor(
+    private itemService: ItemsService,
+    private route: ActivatedRoute,
+    private auth: AuthService,
+  ) {}
 
   ngOnInit() {
-    this.itemService.getItems().subscribe(items => {
-      this.items = items;
+    this.userId = Number(this.route.snapshot.paramMap.get('id')!);
+
+    this.auth.user$.subscribe((profile) => {
+      console.log(profile)
+      this.profile = profile;
+    })
+
+    this.itemService.getItemsByUserId(this.userId).subscribe(items => {
+      console.log(items)
       this.sortItems();
     })
   }
@@ -29,7 +43,7 @@ export class ShoppingListComponent implements OnInit {
     const newItem = {
       itemName,
       isBought: false,
-      userId: 1
+      userId: this.userId
     }
 
     this.itemService.createItem(newItem).subscribe({

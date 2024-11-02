@@ -18,6 +18,10 @@ export class ItemsService {
     return this.httpClient.get<ShoppingListItem>(`${this.apiUrl}/${id}`)
   }
 
+  getItemsByUserId(userId: number) {
+    return this.httpClient.get<ShoppingListItem[]>(`${this.apiUrl}?userId=${userId}`);
+  }
+
   createItem(item: Omit<ShoppingListItem, 'id'>) {
     return this.httpClient.post<ShoppingListItem>(this.apiUrl, item);
   }
