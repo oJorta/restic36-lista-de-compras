@@ -16,7 +16,7 @@ import { AuthService, User } from '@auth0/auth0-angular';
 })
 export class ShoppingListComponent implements OnInit {
   items!: Array<ShoppingListItem>;
-  userId!: number;
+  userId!: string;
   profile!: User | undefined | null;
 
   constructor(
@@ -26,7 +26,7 @@ export class ShoppingListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userId = Number(this.route.snapshot.paramMap.get('id')!);
+    this.userId = this.route.snapshot.paramMap.get('id')!;
 
     this.auth.user$.subscribe((profile) => {
       console.log(profile)
@@ -34,8 +34,10 @@ export class ShoppingListComponent implements OnInit {
     })
 
     this.itemService.getItemsByUserId(this.userId).subscribe(items => {
-      console.log(items)
-      this.sortItems();
+      if (items) {
+        this.items = items;
+        this.sortItems();
+      }
     })
   }
   
@@ -48,6 +50,7 @@ export class ShoppingListComponent implements OnInit {
 
     this.itemService.createItem(newItem).subscribe({
       next: (item) => {
+        console.log(item)
         this.items.push(item)
         this.sortItems();
       },

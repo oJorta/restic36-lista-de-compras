@@ -4,8 +4,13 @@
       placeholder="O que deseja comprar?" 
       [formControl]="nameControl">
     <hr>
-    <button type="submit">
+    <app-button
+      type="submit"
+      [disabled]="!nameControl.valid"
+      color="secondary"
+      size="md"
+      >
       Adicionar
       <img src="../../assets/icons/arrow-right.svg" alt="">
-    </button>
+    </app-button>
 </form>

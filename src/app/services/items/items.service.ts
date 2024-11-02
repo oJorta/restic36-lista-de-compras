@@ -18,7 +18,7 @@ export class ItemsService {
     return this.httpClient.get<ShoppingListItem>(`${this.apiUrl}/${id}`)
   }
 
-  getItemsByUserId(userId: number) {
+  getItemsByUserId(userId: string) {
     return this.httpClient.get<ShoppingListItem[]>(`${this.apiUrl}?userId=${userId}`);
   }
 
