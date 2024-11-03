@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   isHome: boolean = false;
   isAuthenticated$: Observable<boolean>;
   profile!: User | undefined | null;
+  tokenExpired: boolean = false;
   
   constructor(
     private router: Router,
@@ -33,12 +34,17 @@ export class HeaderComponent implements OnInit {
 
     this.auth.user$.subscribe((profile) => {
       if (profile) {
-        console.log(profile)
         this.addUserIfNotExists(profile);
         this.profile = profile;
         this.router.navigate([`/shopping-list/${profile?.sub}`]);
       }
     })
+
+    this.auth.idTokenClaims$.subscribe((info) => {
+      if (info) {
+        this.tokenExpired = info.exp ? info.exp * 1000 < new Date().getTime() : false;
+      }
+    });
   }
 
   login(): void {
@@ -64,7 +70,7 @@ export class HeaderComponent implements OnInit {
           email: user.email
         };
         this.usersService.addUser(newUser).subscribe(() => {
-          console.log('Novo usuário adicionado:', newUser);
+          console.log(newUser);
         });
       }
     });

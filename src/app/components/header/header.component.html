@@ -4,12 +4,6 @@
         <h1>Lista de compras</h1>
     </div>
 
-    @if (isHome) {
-        <p>
-            Organize suas compras com facilidade.
-        </p>
-    }
-
     @if(isAuthenticated$ | async){
         <div class="user-info">
             <p>Bem-vindo, <strong>{{ profile?.given_name }}</strong></p>
@@ -22,12 +16,23 @@
             </app-button> 
         </div>
     }@else {
-        <app-button
-            (onClick)="login()"
-            [color]="'secondary'"
-            [size]="'lg'"
-        >
-            Faça login
-        </app-button>
+        @if (tokenExpired){
+            <p>Token expirado!</p>
+            <app-button
+                (onClick)="login()"
+                [color]="'secondary'"
+                [size]="'lg'"
+            >
+                Reautenticar
+            </app-button>
+        }@else {
+            <app-button
+                (onClick)="login()"
+                [color]="'secondary'"
+                [size]="'lg'"
+            >
+                Faça login
+            </app-button>
+        }
     }
 </header>

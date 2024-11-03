@@ -1,5 +1,8 @@
 <div class="container">
     <main>
+        @if (errorMessage) {
+            <p class="error-message">{{ errorMessage }}</p>
+        }
         <app-add-new-item (newItem)="addNewItem($event)"></app-add-new-item>
 
         <div class="shopping-list-container">

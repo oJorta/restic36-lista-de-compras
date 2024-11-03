@@ -18,6 +18,7 @@ export class ShoppingListComponent implements OnInit {
   items!: Array<ShoppingListItem>;
   userId!: string;
   profile!: User | undefined | null;
+  errorMessage: string = '';
 
   constructor(
     private itemService: ItemsService,
@@ -33,10 +34,16 @@ export class ShoppingListComponent implements OnInit {
       this.profile = profile;
     })
 
-    this.itemService.getItemsByUserId(this.userId).subscribe(items => {
-      if (items) {
+    this.itemService.getItemsByUserId(this.userId).subscribe(
+      {
+      next: (items) => {
         this.items = items;
         this.sortItems();
+        this.errorMessage = '';
+      },
+      error: (err) => {
+        this.errorMessage = 'Erro ao carregar a lista de compras';
+        console.error('Erro: ', err)
       }
     })
   }
@@ -46,16 +53,19 @@ export class ShoppingListComponent implements OnInit {
       itemName,
       isBought: false,
       userId: this.userId
-    }
+    };
 
     this.itemService.createItem(newItem).subscribe({
       next: (item) => {
-        console.log(item)
-        this.items.push(item)
+        this.items.push(item);
         this.sortItems();
+        this.errorMessage = '';
       },
-      error: (err) => console.error('Erro: ', err)
-    })
+      error: (err) => {
+        this.errorMessage = 'Erro ao adicionar o item. Tente novamente.';
+        console.error('Erro: ', err);
+      }
+    });
   }
   
   handleUpdateName(id: number, newItemName: string) {
@@ -66,8 +76,12 @@ export class ShoppingListComponent implements OnInit {
       this.itemService.updateItem(targetItem).subscribe({
         next: (updatedItem) => {
           this.items = this.items.map(item => item.id === id ? updatedItem : item);
+          this.errorMessage = '';
         },
-        error: (err) => console.error('Erro: ', err)
+        error: (err) => {
+          this.errorMessage = 'Erro ao atualizar o item. Tente novamente.';
+          console.error('Erro: ', err);
+        }
       })
     }
 
@@ -82,8 +96,12 @@ export class ShoppingListComponent implements OnInit {
         next: (updatedItem) => {
           this.items = this.items.map(item => item.id === id ? updatedItem : item);
           this.sortItems();
+          this.errorMessage = '';
         },
-        error: (err) => console.error('Erro: ', err)
+        error: (err) => {
+          this.errorMessage = 'Erro ao alterar status do item. Tente novamente.';
+          console.error('Erro: ', err);
+        }
       })
     }
   }
@@ -93,8 +111,12 @@ export class ShoppingListComponent implements OnInit {
       next: () => {
         this.items = this.items.filter(item => item.id !== id);
         this.sortItems();
+        this.errorMessage = '';
       },
-      error: (err) => console.error('Erro: ', err)
+      error: (err) => {
+        this.errorMessage = 'Erro ao deletar o item. Tente novamente.';
+        console.error('Erro: ', err);
+      }
     })
   }
   
